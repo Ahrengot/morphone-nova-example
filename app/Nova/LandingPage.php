@@ -4,18 +4,17 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphOne;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Tenant extends Resource
+class LandingPage extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Tenant::class;
+    public static $model = \App\Models\LandingPage::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,8 +42,9 @@ class Tenant extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name'),
-            MorphOne::make('Landing Page'),
+            MorphTo::make('Owner', 'owner')
+                   ->types([Tenant::class])
+                   ->sortable(),
         ];
     }
 
